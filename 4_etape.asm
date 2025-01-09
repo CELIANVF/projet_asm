@@ -30,6 +30,10 @@ extern exit
 %define DWORD                4
 %define WORD                 2
 %define BYTE                 1
+%define NB_FOYERS            100
+%define WIDTH                800
+%define HEIGHT               800
+
 
 global main
 
@@ -44,10 +48,9 @@ gc:             resq 1
 
 distance_min:   resd 1
 distance_min_id:resd 1
-nb_points:      resd 1
-tableau_x_foyers: resd 800
-tableau_y_foyers: resd 800
-tableau_color_foyers: resd 800
+tableau_x_foyers: resd NB_FOYERS+1
+tableau_y_foyers: resd NB_FOYERS+1
+tableau_color_foyers: resd NB_FOYERS
 drawing_done:   resb 1 ; Flag to indicate if drawing is done
 
 
@@ -68,9 +71,9 @@ y1:             dd 0
 y2:             dd 0
 colors         dd 0x0ebeff, 0x29b0f7, 0x44a2ee, 0x5f94e5, 0x7a86dc, 0x9578d3, 0xb06ac9, 0xcb5cb0, 0xe64e97, 0xff4080
 nb_colors      dd 10
-nb_foyers      dd 80
-width          dd 800
-height         dd 800
+nb_foyers      dd NB_FOYERS
+width          dd WIDTH
+height         dd HEIGHT
 
 section .text
 

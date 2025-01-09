@@ -30,6 +30,10 @@ extern exit
 %define DWORD                4
 %define WORD                 2
 %define BYTE                 1
+%define NB_FOYERS            100
+%define NB_POINTS            100000
+%define WIDTH                800
+%define HEIGHT               800
 
 global main
 
@@ -45,8 +49,8 @@ gc:             resq 1
 distance_min:   resd 1
 distance_min_id:resd 1
 
-tableau_x_foyers: resd 8000
-tableau_y_foyers: resd 8000
+tableau_x_foyers: resd NB_FOYERS+1
+tableau_y_foyers: resd NB_FOYERS+1
 drawing_done:   resb 1 ; Flag to indicate if drawing is done
 
 
@@ -58,10 +62,10 @@ affichage_indice db "Indice : %d", 10, 0 ; Format string for printf
 error_message db "Erreur : indice hors limites ou accès invalide.", 0xA, 0  ; Message d'erreur avec saut de ligne
 event:          times 24 dq 0
 
-width          dd 800
-height         dd 800
-nb_points      dd 100000
-nb_foyers      dd 80
+width          dd WIDTH
+height         dd HEIGHT
+nb_points      dd NB_POINTS
+nb_foyers      dd NB_FOYERS
 
 x1:             dd 0
 x2:             dd 0

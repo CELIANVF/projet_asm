@@ -30,6 +30,12 @@ extern exit
 %define DWORD                4
 %define WORD                 2
 %define BYTE                 1
+%define NB_FOYERS            100
+%define NB_POINTS            100000
+%define WIDTH                800
+%define HEIGHT               800
+
+
 
 global main
 
@@ -44,8 +50,8 @@ gc:             resq 1
 
 distance_min:   resd 1
 distance_min_id:resd 1
-tableau_x_foyers: resd 800
-tableau_y_foyers: resd 800
+tableau_x_foyers: resd NB_FOYERS+1
+tableau_y_foyers: resd NB_FOYERS+1
 drawing_done:   resb 1 ; Flag to indicate if drawing is done
 
 
@@ -66,10 +72,10 @@ y1:             dd 0
 y2:             dd 0
 colors         dd 0x0ebeff, 0x29b0f7, 0x44a2ee, 0x5f94e5, 0x7a86dc, 0x9578d3, 0xb06ac9, 0xcb5cb0, 0xe64e97, 0xff4080
 nb_colors      dd 10
-nb_points      dd 100000
-nb_foyers      dd 80
-width          dd 800
-height         dd 800
+nb_points      dd NB_POINTS
+nb_foyers      dd NB_FOYERS
+width          dd WIDTH
+height         dd HEIGHT
 
 section .text
 
@@ -191,13 +197,13 @@ foyers:
         call generate_random
 
         ; Sauvegarder le nombre aléatoire
-        mov [tableau_x_foyers + r14 * 4], r12
+        mov [tableau_x_foyers + r14 * DWORD], r12
 
         mov ecx, [height] 
         call generate_random
 
         ; Sauvegarder le nombre aléatoire
-        mov [tableau_y_foyers + r14 * 4], r12
+        mov [tableau_y_foyers + r14 * DWORD], r12
 
 
         ; Incrémenter le compteur
@@ -262,8 +268,8 @@ boucle_points:
 
         ; récupérer les coordonnées du foyer
         ; et les stocker dans rcx et rdx
-        mov rdi, [tableau_x_foyers + r15d * 4]
-        mov rsi, [tableau_y_foyers + r15d * 4]
+        mov rdi, [tableau_x_foyers + r15d * DWORD]
+        mov rsi, [tableau_y_foyers + r15d * DWORD]
         mov rdx, [x1]
         mov rcx, [y1]
         call calc_distance
@@ -307,7 +313,7 @@ boucle_points:
     ; couleur de la ligne 4
     mov rdi, qword [display_name]
     mov rsi, qword [gc]
-    mov edx, [colors + r12 * 4] ; Couleur du crayon
+    mov edx, [colors + r12 * DWORD] ; Couleur du crayon
 
     call XSetForeground
 
