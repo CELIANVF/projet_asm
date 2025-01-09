@@ -355,10 +355,7 @@ boucle_points:
     test rdx, rdx                ; verify gc is not null
     jz closeDisplay
     
-    ; Align stack on 16-byte boundary before the call
-    push rbp
-    mov rbp, rsp
-    and rsp, -16                 ; Align stack
+
     
     mov ecx,dword[x1]          ; coordonnée source en x
     mov r8d,dword[y1]          ; coordonnée source en y
@@ -369,10 +366,6 @@ boucle_points:
     
     
     call XDrawLine
-    
-    ; Restore stack
-    mov rsp, rbp
-    pop rbp
     
     ; Continue with the rest of your code
     ; Incrementer le compteur (indice du point)

@@ -30,10 +30,10 @@ extern exit
 %define DWORD                4
 %define WORD                 2
 %define BYTE                 1
-%define NB_FOYERS            100
-%define NB_POINTS            100000
-%define WIDTH                800
-%define HEIGHT               800
+%define NB_FOYERS            200
+%define NB_POINTS            99999
+%define WIDTH                900
+%define HEIGHT               900
 
 
 
@@ -182,11 +182,6 @@ foyers:
     cmp     byte [drawing_done], 1
     je      boucle ; If drawing is done, skip the drawing process
 
-
-    
-
-
-
     ; r14 est à 0 il servira de compteur
     xor r14, r14
 
@@ -286,8 +281,6 @@ boucle_points:
         ; si le compteur est inférieur au nombre de foyers, on boucle
 
 
-
-
         cmp r15d, [nb_foyers]
         jl boucle_foyers_point
 
@@ -351,10 +344,6 @@ boucle_points:
     test rdx, rdx                ; verify gc is not null
     jz closeDisplay
     
-    ; Align stack on 16-byte boundary before the call
-    push rbp
-    mov rbp, rsp
-    and rsp, -16                 ; Align stack
     
     mov ecx,dword[x1]          ; coordonnée source en x
     mov r8d,dword[y1]          ; coordonnée source en y
@@ -366,10 +355,7 @@ boucle_points:
     
     call XDrawLine
     
-    ; Restore stack
-    mov rsp, rbp
-    pop rbp
-    
+
     ; Continue with the rest of your code
     ; Incrementer le compteur (indice du point)
     inc r14
