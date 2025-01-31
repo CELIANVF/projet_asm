@@ -31,7 +31,7 @@ extern exit
 %define WORD                 2
 %define BYTE                 1
 %define NB_FOYERS            100
-%define NB_POINTS            99999999
+%define NB_POINTS            500000
 %define WIDTH                800
 %define HEIGHT               800
 
@@ -257,7 +257,7 @@ boucle_points:
         mov rsi, [tableau_y_foyers + r15d * 4]
         mov rdx, [x1]
         mov rcx, [y1]
-        call calc_distance
+        call calc_squared_distance
 
         ; si aex est inférieur à distance_min, on sauvegarde la distance et l'identifiant du foyer
 
@@ -270,7 +270,6 @@ boucle_points:
         inc r15d
 
         ; si le compteur est inférieur au nombre de foyers, on boucle
-
 
 
 
@@ -384,29 +383,6 @@ closeDisplay:
 ; Input: r12 contains the input number (unsigned).
 ; Output: r12 contains the integer square root.
 
-section .text
-global int_sqrt
-
-int_sqrt:
-    ; Calcul de la racine carrée entière de r12
-    ; Entrée : r12
-    ; Sortie : r12
-
-    mov ecx, 0          ; compteur
-    mov ebx, r12d        ; valeur initiale
-
-sqrt_loop:
-    inc ecx             ; incrémenter le compteur
-    mov edx, ecx
-    imul edx, edx       ; edx = ecx * ecx
-    cmp edx, ebx        ; comparer edx avec la valeur initiale
-    jg sqrt_done        ; si edx > ebx, terminer la boucle
-    jmp sqrt_loop       ; sinon, continuer la boucle
-
-sqrt_done:
-    dec ecx             ; décrémenter le compteur pour obtenir la racine carrée
-    mov r12d, ecx        ; stocker le résultat dans r12
-    ret
 
 erreur:
     ; Afficher l'indice de r12 
@@ -443,30 +419,26 @@ generate_random:
 
     ret
 
-; fonction calcule la distance entre deux points
-calc_distance:
+
+calc_squared_distance:
     ; Inputs:
-    ; rdi - x1 (coordinate of the first point)
-    ; rsi - y1 (coordinate of the first point)
-    ; rdx - x2 (coordinate of the second point)
-    ; rcx - y2 (coordinate of the second point)
+    ; rdi - x1
+    ; rsi - y1
+    ; rdx - x2
+    ; rcx - y2
     ; Output:
-    ; r12d - distance between the two points
+    ; r12d - squared distance between the two points
 
-    ; calcul de la distance en x
-    mov r12, rdi
-    sub r12, rdx
-    imul r12, r12
-    mov eax, r12d
+    ; Calculate (x1 - x2)^2
+    sub rdi, rdx
+    imul rdi, rdi
 
-    ; calcul de la distance en y
-    mov r12, rsi
-    sub r12, rcx
-    imul r12, r12
-    add eax, r12d
+    ; Calculate (y1 - y2)^2
+    sub rsi, rcx
+    imul rsi, rsi
 
-    ; calcul de la distance totale
-    mov r12d, eax
-    call int_sqrt
+    ; Sum the squared differences
+    add rdi, rsi
+    mov r12d, edi
 
     ret
