@@ -1,0 +1,41 @@
+# Fichiers objets compilés
+*.o
+
+# Binaires générés
+a.out
+*.out
+*.exe
+
+# Fichiers de listing NASM (si générés)
+*.lst
+
+# Fichiers temporaires et backups
+*~
+*.tmp
+
+# Fichiers de log
+*.log
+
+# Dumps et core files
+core
+*.core
+
+# Dossiers de build ou binaires
+/build/
+/bin/
+
+# Autres fichiers système
+.DS_Store
+
+# --- Fichiers spécifiques à CLion ---
+
+# Répertoire de configuration de CLion
+.idea/
+
+# Répertoires de build générés par CMake/CLion
+cmake-build-*/
+
+# Fichiers et répertoires générés par CMake
+CMakeFiles/
+CMakeCache.txt
+*.cmake
