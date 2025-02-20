@@ -1,6 +1,6 @@
 # Fichiers objets compilés
 *.o
-
+*
 # Binaires générés
 a.out
 *.out
