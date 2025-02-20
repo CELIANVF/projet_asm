@@ -41,7 +41,7 @@ extern exit
 %define BYTE                 1          ; Taille d'un octet (8 bits)
 %define NB_FOYERS            200        ; Nombre total de foyers à générer
 %define NB_POINTS            500000     ; Nombre total de points à traiter/dessiner
-%define WIDTH                900        ; Largeur de la fenêtre
+%define WIDTH                1600        ; Largeur de la fenêtre
 %define HEIGHT               900        ; Hauteur de la fenêtre
 
 global main   ; Point d'entrée du programme

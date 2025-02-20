@@ -39,9 +39,9 @@ extern exit
 %define DWORD                4          ; Taille d'un double word (32 bits)
 %define WORD                 2          ; Taille d'un word (16 bits)
 %define BYTE                 1          ; Taille d'un octet (8 bits)
-%define NB_FOYERS            100        ; Nombre de foyers à générer
-%define WIDTH                800        ; Largeur de la fenêtre
-%define HEIGHT               800        ; Hauteur de la fenêtre
+%define NB_FOYERS            1000        ; Nombre de foyers à générer
+%define WIDTH                1600        ; Largeur de la fenêtre
+%define HEIGHT               900        ; Hauteur de la fenêtre
 
 global main   ; Point d'entrée du programme
 
@@ -196,12 +196,12 @@ foyers:
 
 boucle_foyers:
         ; Génération de la coordonnée x du foyer
-        mov     ecx, [width]         ; Charge la largeur (max pour x)
+        mov     ecx, [height]         ; Charge la largeur (max pour x)
         call    generate_random      ; Génère un nombre aléatoire entre 0 et (width - 1)
         mov     [tableau_x_foyers + r14 * 4], r12  ; Sauvegarde dans le tableau
 
         ; Génération de la coordonnée y du foyer
-        mov     ecx, [height]        ; Charge la hauteur (max pour y)
+        mov     ecx, [width]        ; Charge la hauteur (max pour y)
         call    generate_random      ; Génère un nombre aléatoire entre 0 et (height - 1)
         mov     [tableau_y_foyers + r14 * 4], r12  ; Sauvegarde dans le tableau
 
